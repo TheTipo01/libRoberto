@@ -14,7 +14,7 @@ var (
 	FS = memfs.Create()
 )
 
-// GenAudioVirtual generates a mp3 file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text) + file extension
+// GenAudioVirtual generates a mp3 file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text)
 // Remember to delete the file when you are done, as it sits in RAM!
 func GenAudioMp3Virtual(text string, timeOut time.Duration) string {
 	h := sha1.New()
@@ -23,7 +23,7 @@ func GenAudioMp3Virtual(text string, timeOut time.Duration) string {
 
 	genMp3Memfs(text, uuid, timeOut)
 
-	return uuid + ".mp3"
+	return uuid
 }
 
 func genMp3Memfs(text string, uuid string, timeOut time.Duration) {
@@ -67,7 +67,7 @@ func genMp3Memfs(text string, uuid string, timeOut time.Duration) {
 	}
 }
 
-// GenAudioVirtual generates a dca file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text) + file extension
+// GenAudioVirtual generates a dca file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text)
 // Remember to delete the file when you are done, as it sits in RAM!
 func GenAudioDcaVirtual(text string, timeOut time.Duration) string {
 	h := sha1.New()
@@ -76,7 +76,7 @@ func GenAudioDcaVirtual(text string, timeOut time.Duration) string {
 
 	genDCAMemfs(text, uuid, timeOut)
 
-	return uuid + ".dca"
+	return uuid
 }
 
 // Generates a virtual DCA file

@@ -62,3 +62,11 @@ func GenAudioMp3(text string, timeOut time.Duration) string {
 
 	return uuid
 }
+
+// GenAudioVirtual generates the UUID for the given text
+func GenUUID(text string) string {
+	h := sha1.New()
+	h.Write([]byte(text))
+
+	return strings.ToUpper(base32.HexEncoding.EncodeToString(h.Sum(nil)))
+}
