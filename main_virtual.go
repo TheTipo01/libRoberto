@@ -10,29 +10,28 @@ import (
 	"time"
 )
 
-
-var(
+var (
 	FS = memfs.Create()
 )
 
-// GenAudioVirtual generates a mp3 file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text)
+// GenAudioVirtual generates a mp3 file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text) + file extension
 // Remember to delete the file when you are done, as it sits in RAM!
-func GenAudioVirtual(text string, timeOut time.Duration) string {
+func GenAudioMp3Virtual(text string, timeOut time.Duration) string {
 	h := sha1.New()
 	h.Write([]byte(text))
 	uuid := strings.ToUpper(base32.HexEncoding.EncodeToString(h.Sum(nil)))
 
-	genMemfs(text, uuid, timeOut)
+	genMp3Memfs(text, uuid, timeOut)
 
-	return uuid
+	return uuid + ".mp3"
 }
 
-func genMemfs(text string, uuid string, timeOut time.Duration) {
+func genMp3Memfs(text string, uuid string, timeOut time.Duration) {
 	var tts, ffmpeg *exec.Cmd
 	// Create a channel so that we can wait a maximum of 30 second before killing the processes
 	c := make(chan int)
 	// File
-	f, _ := FS.OpenFile(uuid + ".mp3", os.O_CREATE, 0666)
+	f, _ := FS.OpenFile(uuid+".mp3", os.O_CREATE, 0666)
 	defer f.Close()
 
 	go func() {
@@ -68,13 +67,25 @@ func genMemfs(text string, uuid string, timeOut time.Duration) {
 	}
 }
 
+// GenAudioVirtual generates a dca file (in a virtual filesystem) from a string, returning its UUID (aka SHA1 hash of the text) + file extension
+// Remember to delete the file when you are done, as it sits in RAM!
+func GenAudioDcaVirtual(text string, timeOut time.Duration) string {
+	h := sha1.New()
+	h.Write([]byte(text))
+	uuid := strings.ToUpper(base32.HexEncoding.EncodeToString(h.Sum(nil)))
+
+	genDCAMemfs(text, uuid, timeOut)
+
+	return uuid + ".dca"
+}
+
 // Generates a virtual DCA file
 func genDCAMemfs(text string, uuid string, timeOut time.Duration) {
 	var tts, ffmpeg, dca *exec.Cmd
 	// Create a channel so that we can wait a maximum of 30 second before killing the processes
 	c := make(chan int)
 	// File
-	f, _ := FS.OpenFile(uuid + ".dca", os.O_CREATE, 0666)
+	f, _ := FS.OpenFile(uuid+".dca", os.O_CREATE, 0666)
 	defer f.Close()
 
 	go func() {

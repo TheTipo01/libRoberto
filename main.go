@@ -62,4 +62,3 @@ func GenAudioMp3(text string, timeOut time.Duration) string {
 
 	return uuid
 }
-
