@@ -1,4 +1,4 @@
-module libRoberto
+module github.com/TheTipo01/libRoberto
 
 go 1.17
 
