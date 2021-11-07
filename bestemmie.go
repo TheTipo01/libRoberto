@@ -10,28 +10,29 @@ import (
 var adjectivesFile embed.FS
 
 var (
-	// Gods
-	gods       = []string{"Dio", "Gesù", "Madonna"}
-	adjectives []string
+	// Gods holds, well, the gods
+	Gods       = []string{"Dio", "Gesù", "Madonna"}
+	// Adjectives holds a list of adjectives in italian
+	Adjectives []string
 )
 
 func init() {
 	initializeAdjectives()
 }
 
-// Reads adjectives
+// Reads Adjectives
 func initializeAdjectives() {
 	foo, _ := adjectivesFile.ReadFile("parole.txt")
-	adjectives = strings.Split(string(foo), "\n")
+	Adjectives = strings.Split(string(foo), "\n")
 }
 
 // Bestemmia generates a bestemmia
 func Bestemmia() string {
-	s1 := gods[rand.Intn(len(gods))]
+	s1 := Gods[rand.Intn(len(Gods))]
 
-	s := s1 + " " + adjectives[rand.Intn(len(adjectives))]
+	s := s1 + " " + Adjectives[rand.Intn(len(Adjectives))]
 
-	if s1 == gods[2] {
+	if s1 == Gods[2] {
 		s = s[:len(s)-2] + "a"
 	}
 
