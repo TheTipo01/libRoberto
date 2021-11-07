@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+var (
+	// Voice used to generate audio files
+	Voice = "Roberto"
+)
+
 // Generates audio from a string. Checks if it already exist before generating it
 func genMp3(text string, uuid string, timeOut time.Duration) {
 	const audioExtension = ".mp3"
@@ -18,7 +23,7 @@ func genMp3(text string, uuid string, timeOut time.Duration) {
 		c := make(chan int)
 
 		go func() {
-			tts = exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", "Roberto")
+			tts = exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", Voice)
 			tts.Stdin = strings.NewReader(text)
 			ttsOut, _ := tts.StdoutPipe()
 			_ = tts.Start()
@@ -61,7 +66,7 @@ func GenAudioMp3(text string, timeOut time.Duration) string {
 
 // GenDCA returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the DCA stream
 func GenDCA(text string) []*exec.Cmd {
-	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", "Roberto")
+	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", Voice)
 	tts.Stdin = strings.NewReader(text)
 	ttsOut, _ := tts.StdoutPipe()
 
