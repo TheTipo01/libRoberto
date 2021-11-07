@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 type treno struct {
 	TipoTreno        string      `json:"tipoTreno"`

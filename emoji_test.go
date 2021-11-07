@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 import (
 	"strings"

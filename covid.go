@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 import (
 	"github.com/goccy/go-json"
@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// GetCovid gets data about Italy's cases
 func GetCovid() string {
 
 	var (

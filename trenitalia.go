@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 import (
 	"github.com/goccy/go-json"
@@ -38,7 +38,7 @@ func init() {
 
 }
 
-// Search where the given trainID starts
+// SearchAndGetTrain creates an announcement for the given trainID, if it exists
 func SearchAndGetTrain(trainID string) string {
 
 	resp, err := http.Get("http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/" + trainID)

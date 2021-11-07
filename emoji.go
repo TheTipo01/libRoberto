@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 import (
 	"embed"
@@ -44,6 +44,7 @@ func emojiReplacer() *strings.Replacer {
 	return strings.NewReplacer(args...)
 }
 
+// EmojiToDescription converts all the occurrences of an emoji with its description
 func EmojiToDescription(str string) string {
 	if gomoji.ContainsEmoji(str) {
 		str = emoji.Replace(str)

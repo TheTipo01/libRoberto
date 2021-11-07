@@ -1,4 +1,4 @@
-package libRoberto
+package libroberto
 
 import (
 	"embed"
@@ -25,7 +25,7 @@ func initializeAdjectives() {
 	adjectives = strings.Split(string(foo), "\n")
 }
 
-// Generates a bestemmia
+// Bestemmia generates a bestemmia
 func Bestemmia() string {
 	s1 := gods[rand.Intn(len(gods))]
 

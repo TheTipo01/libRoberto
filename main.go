@@ -1,8 +1,6 @@
-package libRoberto
+package libroberto
 
 import (
-	"crypto/sha1"
-	"encoding/base32"
 	"os"
 	"os/exec"
 	"strings"
@@ -54,19 +52,21 @@ func genMp3(text string, uuid string, timeOut time.Duration) {
 
 // GenAudioMp3 generates a mp3 file from a string, returning its UUID (aka SHA1 hash of the text)
 func GenAudioMp3(text string, timeOut time.Duration) string {
-	h := sha1.New()
-	h.Write([]byte(text))
-	uuid := strings.ToUpper(base32.HexEncoding.EncodeToString(h.Sum(nil)))
+	uuid := GenUUID(text)
 
 	genMp3(text, uuid, timeOut)
 
 	return uuid
 }
 
-// GenAudioVirtual generates the UUID for the given text
-func GenUUID(text string) string {
-	h := sha1.New()
-	h.Write([]byte(text))
+// GenDCA returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the DCA stream
+func GenDCA(text string) []*exec.Cmd {
+	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", "Roberto", "--raw")
+	tts.Stdin = strings.NewReader(text)
+	ttsOut, _ := tts.StdoutPipe()
 
-	return strings.ToUpper(base32.HexEncoding.EncodeToString(h.Sum(nil)))
+	dca := exec.Command("dca")
+	dca.Stdin = ttsOut
+
+	return []*exec.Cmd{tts, dca}
 }
