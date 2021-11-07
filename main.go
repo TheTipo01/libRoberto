@@ -65,7 +65,7 @@ func GenDCA(text string) []*exec.Cmd {
 	tts.Stdin = strings.NewReader(text)
 	ttsOut, _ := tts.StdoutPipe()
 
-	ffmpeg := exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "pipe:1")
+	ffmpeg := exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "2", "pipe:1")
 	ffmpeg.Stdin = ttsOut
 	ffmpegOut, _ := ffmpeg.StdoutPipe()
 
