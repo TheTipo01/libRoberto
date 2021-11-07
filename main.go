@@ -61,12 +61,16 @@ func GenAudioMp3(text string, timeOut time.Duration) string {
 
 // GenDCA returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the DCA stream
 func GenDCA(text string) []*exec.Cmd {
-	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", "Roberto", "--raw")
+	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", "Roberto")
 	tts.Stdin = strings.NewReader(text)
 	ttsOut, _ := tts.StdoutPipe()
 
-	dca := exec.Command("dca")
-	dca.Stdin = ttsOut
+	ffmpeg := exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "pipe:1")
+	ffmpeg.Stdin = ttsOut
+	ffmpegOut, _ := ffmpeg.StdoutPipe()
 
-	return []*exec.Cmd{tts, dca}
+	dca := exec.Command("dca")
+	dca.Stdin = ffmpegOut
+
+	return []*exec.Cmd{tts, ffmpeg, dca}
 }

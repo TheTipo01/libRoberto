@@ -11,7 +11,7 @@ var adjectivesFile embed.FS
 
 var (
 	// Gods holds, well, the gods
-	Gods       = []string{"Dio", "Gesù", "Madonna"}
+	Gods = []string{"Dio", "Gesù", "Madonna"}
 	// Adjectives holds a list of adjectives in italian
 	Adjectives []string
 )
