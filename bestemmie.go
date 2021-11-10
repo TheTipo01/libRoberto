@@ -23,7 +23,7 @@ func init() {
 // Reads Adjectives
 func initializeAdjectives() {
 	foo, _ := adjectivesFile.ReadFile("parole.txt")
-	Adjectives = strings.Split(string(foo), "\n")
+	Adjectives = strings.Split(strings.ReplaceAll(string(foo), "\r\n", "\n"), "\n")
 }
 
 // Bestemmia generates a bestemmia
