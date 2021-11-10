@@ -33,7 +33,7 @@ func Bestemmia() string {
 	s := s1 + " " + Adjectives[rand.Intn(len(Adjectives))]
 
 	if s1 == Gods[2] {
-		s = s[:len(s)-2] + "a"
+		s = s[:len(s)-1] + "a"
 	}
 
 	return s
