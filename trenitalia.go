@@ -2,7 +2,7 @@ package libroberto
 
 import (
 	"github.com/goccy/go-json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -41,12 +41,12 @@ func init() {
 // SearchAndGetTrain creates an announcement for the given trainID, if it exists
 func SearchAndGetTrain(trainID string) string {
 
-	resp, err := http.Get("http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/" + trainID)
+	resp, err := http.Get("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/" + trainID)
 	if err != nil {
 		return ""
 	}
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	out := string(body)
 	_ = resp.Body.Close()
@@ -80,7 +80,7 @@ func getTrain(idStazioneTreno string) string {
 		out               string
 	)
 
-	res, err := http.Get("http://www.viaggiatreno.it/viaggiatrenonew/resteasy/viaggiatreno/andamentoTreno/" + idStazioneTreno + "/" + midnight())
+	res, err := http.Get("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/andamentoTreno/" + idStazioneTreno + "/" + midnight())
 	if err != nil {
 		return ""
 	}
