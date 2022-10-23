@@ -7,7 +7,7 @@ require (
 	github.com/forPelevin/gomoji v1.1.6
 	github.com/goccy/go-json v0.9.11
 	github.com/goodsign/monday v1.0.0
-	golang.org/x/text v0.3.7
+	golang.org/x/text v0.4.0
 )
 
-require github.com/rivo/uniseg v0.4.1 // indirect
+require github.com/rivo/uniseg v0.4.2 // indirect
