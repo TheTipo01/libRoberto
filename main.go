@@ -13,9 +13,8 @@ var (
 )
 
 // Generates audio from a string. Checks if it already exist before generating it
-func genMp3(text string, uuid string, timeOut time.Duration) {
-	const audioExtension = ".mp3"
-	_, err := os.Stat("./temp/" + uuid + audioExtension)
+func genAudio(text, uuid, format string, timeOut time.Duration) {
+	_, err := os.Stat("./temp/" + uuid + "." + format)
 
 	if os.IsNotExist(err) {
 		var tts, ffmpeg *exec.Cmd
@@ -28,7 +27,7 @@ func genMp3(text string, uuid string, timeOut time.Duration) {
 			ttsOut, _ := tts.StdoutPipe()
 			_ = tts.Start()
 
-			ffmpeg = exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "2", "-f", "mp3", "./temp/"+uuid+audioExtension)
+			ffmpeg = exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "2", "-f", format, "./temp/"+uuid+"."+format)
 			ffmpeg.Stdin = ttsOut
 			_ = ffmpeg.Run()
 
@@ -55,11 +54,11 @@ func genMp3(text string, uuid string, timeOut time.Duration) {
 	}
 }
 
-// GenAudioMp3 generates a mp3 file from a string, returning its UUID (aka SHA1 hash of the text)
-func GenAudioMp3(text string, timeOut time.Duration) string {
+// GenAudio generates a mp3 file from a string, returning its UUID (aka SHA1 hash of the text)
+func GenAudio(text, format string, timeOut time.Duration) string {
 	uuid := GenUUID(text)
 
-	genMp3(text, uuid, timeOut)
+	genAudio(text, uuid, format, timeOut)
 
 	return uuid
 }
