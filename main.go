@@ -17,7 +17,7 @@ func genMp3(text string, uuid string, timeOut time.Duration) {
 	const audioExtension = ".mp3"
 	_, err := os.Stat("./temp/" + uuid + audioExtension)
 
-	if err != nil {
+	if os.IsNotExist(err) {
 		var tts, ffmpeg *exec.Cmd
 		// Create a channel so that we can wait a maximum of 30 second before killing the processes
 		c := make(chan int)
