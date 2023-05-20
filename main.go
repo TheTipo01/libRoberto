@@ -54,7 +54,7 @@ func genAudio(text, uuid, format string, timeOut time.Duration) {
 	}
 }
 
-// GenAudio generates a mp3 file from a string, returning its UUID (aka SHA1 hash of the text)
+// GenAudio generates a file from a string with the given format, returning its UUID (aka SHA1 hash of the text)
 func GenAudio(text, format string, timeOut time.Duration) string {
 	uuid := GenUUID(text)
 
@@ -77,4 +77,17 @@ func GenDCA(text string) []*exec.Cmd {
 	dca.Stdin = ffmpegOut
 
 	return []*exec.Cmd{tts, ffmpeg, dca}
+}
+
+// GenAudioPipes returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the stream.
+// The stream will be in the format specified by the format parameter
+func GenAudioPipes(text, format string) []*exec.Cmd {
+	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", Voice)
+	tts.Stdin = strings.NewReader(text)
+	ttsOut, _ := tts.StdoutPipe()
+
+	ffmpeg := exec.Command("ffmpeg", "-i", "pipe:0", "-f", "s16le", "-ar", "48000", "-ac", "2", "-f", format, "pipe:1")
+	ffmpeg.Stdin = ttsOut
+
+	return []*exec.Cmd{tts, ffmpeg}
 }
