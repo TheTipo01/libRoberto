@@ -1,7 +1,7 @@
 package libroberto
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -21,7 +21,7 @@ func GetWikipedia(link string) string {
 		return ""
 	}
 
-	body, _ := ioutil.ReadAll(res.Body)
+	body, _ := io.ReadAll(res.Body)
 
 	out := string(body)
 	_ = res.Body.Close()
