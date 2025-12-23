@@ -79,6 +79,14 @@ func GenDCA(text string) []*exec.Cmd {
 	return []*exec.Cmd{tts, ffmpeg, dca}
 }
 
+// GenRawAudio returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the raw audio stream
+func GenRawAudio(text string) []*exec.Cmd {
+	tts := exec.Command("balcon", "-i", "-o", "-enc", "utf8", "-n", Voice)
+	tts.Stdin = strings.NewReader(text)
+
+	return []*exec.Cmd{tts}
+}
+
 // GenAudioPipes returns a slice of exec.Cmd with commands to start. The stdout of the last element will contain the stream.
 // The stream will be in the format specified by the format parameter
 func GenAudioPipes(text, format string) []*exec.Cmd {
