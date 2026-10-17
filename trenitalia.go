@@ -58,10 +58,10 @@ func SearchAndGetTrain(trainID string) string {
 
 	foo := strings.Split(out, "|")
 
-	if len(foo) >= 1 {
+	if len(foo) > 1 {
 		combinato := strings.Split(foo[1], "-")
 
-		if len(combinato) >= 1 {
+		if len(combinato) > 1 {
 			return getTrain(strings.TrimSpace(combinato[1]) + "/" + combinato[0])
 		}
 	}
