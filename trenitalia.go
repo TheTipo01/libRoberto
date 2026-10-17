@@ -13,6 +13,11 @@ import (
 var (
 	// Maps category in the long way
 	category = make(map[string]string)
+	client   http.Client
+)
+
+const (
+	userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0"
 )
 
 func init() {
@@ -37,12 +42,16 @@ func init() {
 	category["D"] = "Diretto"
 	category["DD"] = "Direttissimo"
 
+	client = http.Client{}
 }
 
 // SearchAndGetTrain creates an announcement for the given trainID, if it exists
 func SearchAndGetTrain(trainID string) string {
 
-	resp, err := http.Get("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/" + trainID)
+	req, _ := http.NewRequest(http.MethodGet, "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/"+trainID, nil)
+	req.Header.Set("User-Agent", userAgent)
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return ""
 	}
@@ -81,7 +90,10 @@ func getTrain(idStazioneTreno string) string {
 		out               string
 	)
 
-	res, err := http.Get("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/andamentoTreno/" + idStazioneTreno + "/" + midnight())
+	req, _ := http.NewRequest(http.MethodGet, "http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/andamentoTreno/"+idStazioneTreno+"/"+midnight(), nil)
+	req.Header.Set("User-Agent", userAgent)
+
+	res, err := client.Do(req)
 	if err != nil {
 		return ""
 	}
