@@ -122,7 +122,7 @@ func getTrain(idStazioneTreno string) string {
 
 	stazioni = strings.TrimSuffix(stazioni, ",") + "."
 
-	out = "Il treno " + category[strings.Split(strings.TrimSpace(treno.CompNumeroTreno), " ")[0]] + ", " + formatNumber(treno.NumeroTreno) + ", di trenitalia, proveniente da " + treno.Origine + " ,e diretto a " + treno.Destinazione + ", delle ore " + ora.Format("15:04") + ", e' in arrivo al binario " + binario + "! Attenzione! Allontanarsi dalla linea gialla!"
+	out = "Il treno " + category[strings.Split(strings.TrimSpace(treno.CompNumeroTreno), " ")[0]] + ", " + formatNumber(treno.NumeroTreno) + ", di trenitalia, proveniente da " + treno.Origine + ", e diretto a " + treno.Destinazione + ", delle ore " + ora.Format("15:04") + ", e' in arrivo al binario " + binario + "! Attenzione! Allontanarsi dalla linea gialla!"
 
 	if stazioni != "." {
 		out += "Ferma a: " + stazioni
